@@ -14,6 +14,7 @@ Requires:	udev
 Requires:	cryptsetup-luks
 Requires:	setup
 Requires:	sed
+requires:	bash >= 4.0
 
 %description
 Adds entries to /etc/fstab and provides convenience scripts
