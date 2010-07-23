@@ -1,13 +1,30 @@
 # create symlinks for external drives
 
-# my 2TiB usb drive
-ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="portable"
-ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="2", SYMLINK+="insecure"
-ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="3", SYMLINK+="secure"
-ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="4", SYMLINK+="btrfs"
+#
+# my 2TiB usb drive (with GPT partition table)
+#
+# create mountpoints
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="1", RUN+="/bin/mkdir -p /media/portable"
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="2", RUN+="/bin/mkdir -p /media/insecure"
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="3", RUN+="/bin/mkdir -p /media/secure"
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="4", RUN+="/bin/mkdir -p /media/btrfs"
+# create symlinks in /dev
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="portable"
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="2", SYMLINK+="insecure"
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="3", SYMLINK+="secure"
+ACTION=="add" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="4", SYMLINK+="btrfs"
+# remove mountpoints
+ACTION=="remove" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="1", RUN+="/bin/rmdir -f /media/portable"
+ACTION=="remove" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="2", RUN+="/bin/rmdir -f /media/insecure"
+ACTION=="remove" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="3", RUN+="/bin/rmdir -f /media/secure"
+ACTION=="remove" ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="4", RUN+="/bin/rmdir -f /media/btrfs"
 
 # my 64 GiB usb flash voyager
-ATTRS{serial}=="c86173029041c8" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="voyager"
+ACTION=="add" ATTRS{serial}=="c86173029041c8" SUBSYSTEM=="block" ATTR{partition}=="1", RUN+="/bin/mkdir -p /media/voyager"
+ACTION=="add" ATTRS{serial}=="c86173029041c8" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="voyager"
+ACTION=="remove" ATTRS{serial}=="c86173029041c8" SUBSYSTEM=="block" ATTR{partition}=="1", RUN+="/bin/rmdir -f /media/voyager"
 
 # my 500 GiB usb drive
-ATTRS{serial}=="2GE39261" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="seagate"
+ACTION=="add" ATTRS{serial}=="2GE39261" SUBSYSTEM=="block" ATTR{partition}=="1", RUN+="/bin/mkdir -p /media/seagate"
+ACTION=="add" ATTRS{serial}=="2GE39261" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="seagate"
+ACTION=="remove" ATTRS{serial}=="2GE39261" SUBSYSTEM=="block" ATTR{partition}=="1", RUN+="/bin/rmdir -f /media/seagate"
