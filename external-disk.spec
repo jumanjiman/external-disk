@@ -1,6 +1,6 @@
 Name:		external-disk
 Version:	0.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Configures /etc/fstab for my portable hard drives
 
 Group:		Admin
@@ -85,6 +85,10 @@ grep -q EXTERNAL_DISK /etc/fstab || {
 
 
 %changelog
+* Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-4
+- absolute paths in mount-luks and umount-luks
+- mount-luks checks that mountpoint exists
+
 * Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-3
 - quiet grep in umount-luks error check
 - fixed logic in mount-luks
