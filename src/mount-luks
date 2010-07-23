@@ -17,7 +17,7 @@ if [[ -z $name ]]; then
   exit 1
 fi
 
-grep $name /etc/mtab || {
+grep -q $name /etc/mtab && {
   echo "Error: $name seems to be mounted already"
   exit 1
 } >&2
