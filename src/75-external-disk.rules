@@ -1,0 +1,6 @@
+# create symlinks for external drives
+
+ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="portable"
+ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="2", SYMLINK+="insecure"
+ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="3", SYMLINK+="secure"
+ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="4", SYMLINK+="btrfs"
