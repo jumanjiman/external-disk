@@ -1,6 +1,13 @@
 # create symlinks for external drives
 
+# my 2TiB usb drive
 ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="portable"
 ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="2", SYMLINK+="insecure"
 ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="3", SYMLINK+="secure"
 ATTRS{serial}=="2GEWTY5L" SUBSYSTEM=="block" ATTR{partition}=="4", SYMLINK+="btrfs"
+
+# my 64 GiB usb flash voyager
+ATTRS{serial}=="c86173029041c8" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="voyager"
+
+# my 500 GiB usb drive
+ATTRS{serial}=="2GE39261" SUBSYSTEM=="block" ATTR{partition}=="1", SYMLINK+="seagate"

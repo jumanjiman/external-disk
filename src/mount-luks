@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# mounts a filesystem from an encrypted partition
+
+name=$1
+
+usage() {
+	cat <<- EOF
+	usage:   $0 device-name
+	example: $0 voyager
+	EOF
+}
+
+if [[ -z $name ]]; then
+  echo "Error: missing device-name" >&2
+  usage >&2
+  exit 1
+fi
+
+read -sp "Crypt passphrase: " phrase
+echo "" >&2
+if [ "x" != "x$phrase" ]; then
+	echo $phrase | cryptsetup create $name /dev/$name
+	mkdir /media/$name &> /dev/null
+	mount /dev/mapper/$name /media/$name
+fi

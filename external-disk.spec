@@ -16,6 +16,8 @@ Requires:	setup
 Requires:	sed
 
 %description
+Adds entries to /etc/fstab and provides convenience scripts
+specific to my personal external hard drives.
 
 
 %prep
@@ -23,11 +25,15 @@ Requires:	sed
 
 
 %build
+# nothing to build
 
 
 %install
 rm -rf %{buildroot}
-
+mkdir -p %{buildroot}/etc/udev/rules.d/
+mkdir -p %{buildroot}/usr/local/sbin/
+install -m 644 src/75-external-disk.rules %{buildroot}/etc/udev/rules.d/
+install -m 755 src/mount-luks %{buildroot}/usr/local/sbin/
 
 %clean
 rm -rf %{buildroot}
@@ -37,6 +43,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %doc src/COPYING
 %config /etc/udev/rules.d/75-external-disk.rules
+/usr/local/sbin/mount-luks
 
 
 %changelog
