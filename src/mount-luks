@@ -17,13 +17,19 @@ if [[ -z $name ]]; then
   exit 1
 fi
 
-grep -q $name /etc/mtab && {
+/bin/grep -q $name /etc/mtab && {
   echo "Error: $name seems to be mounted already"
   exit 1
 } >&2
 
-test -L /dev/$name || {
+/usr/bin/test -L /dev/$name || {
   echo "Error: /dev/$name is not a symlink"
+  exit 1
+} >&2
+
+/usr/bin/test -d /media/$name || {
+  # mountpoint should be created by /etc/udev/rules/75-external-disk.rules
+  echo "Error: /media/$name is not a directory"
   exit 1
 } >&2
 
@@ -31,6 +37,5 @@ read -sp "Crypt passphrase: " phrase
 echo "" >&2
 if [ "x" != "x$phrase" ]; then
 	echo $phrase | cryptsetup create $name /dev/$name
-	mkdir /media/$name &> /dev/null || :
-	mount /dev/mapper/$name /media/$name
+	/bin/mount /dev/mapper/$name /media/$name
 fi
