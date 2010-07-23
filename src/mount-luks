@@ -36,6 +36,6 @@ fi
 read -sp "Crypt passphrase: " phrase
 echo "" >&2
 if [ "x" != "x$phrase" ]; then
-	echo $phrase | cryptsetup create $name /dev/$name
+	echo $phrase | /sbin/cryptsetup create $name /dev/$name
 	/bin/mount /dev/mapper/$name /media/$name
 fi
