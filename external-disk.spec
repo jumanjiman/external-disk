@@ -90,7 +90,4 @@ grep -q EXTERNAL_DISK /etc/fstab || {
 - added umount-luks script
 
 * Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-0
-- new package built with tito
-
-* Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-0
 - initial packaging
