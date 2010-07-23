@@ -17,10 +17,20 @@ if [[ -z $name ]]; then
   exit 1
 fi
 
+grep $name /etc/mtab || {
+  echo "Error: $name seems to be mounted already"
+  exit 1
+} >&2
+
+test -L /dev/$name || {
+  echo "Error: /dev/$name is not a symlink"
+  exit 1
+} >&2
+
 read -sp "Crypt passphrase: " phrase
 echo "" >&2
 if [ "x" != "x$phrase" ]; then
 	echo $phrase | cryptsetup create $name /dev/$name
-	mkdir /media/$name &> /dev/null
+	mkdir /media/$name &> /dev/null || :
 	mount /dev/mapper/$name /media/$name
 fi
