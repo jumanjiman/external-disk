@@ -1,0 +1,8 @@
+== Overview ==
+
+This package leverages `udev` to automatically mount
+my personal USB hard drives consistently in every
+runlevel.
+
+It also contains convenience scripts for mounting
+my LUKS-encrypted partitions.
