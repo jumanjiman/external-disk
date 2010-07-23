@@ -1,6 +1,6 @@
 Name:		external-disk
 Version:	0.1
-Release:	0%{?dist}
+Release:	1%{?dist}
 Summary:	Configures /etc/fstab for my portable hard drives
 
 Group:		Admin
@@ -85,6 +85,10 @@ grep -q EXTERNAL_DISK /etc/fstab || {
 
 
 %changelog
+* Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-1
+- added basic error checks to mount-luks
+- added umount-luks script
+
 * Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-0
 - new package built with tito
 
