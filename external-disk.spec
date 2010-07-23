@@ -15,6 +15,7 @@ Requires:	cryptsetup-luks
 Requires:	setup
 Requires:	sed
 requires:	bash >= 4.0
+requires:	grep
 
 %description
 Adds entries to /etc/fstab and provides convenience scripts
@@ -46,6 +47,41 @@ rm -rf %{buildroot}
 %config /etc/udev/rules.d/75-external-disk.rules
 /usr/local/sbin/mount-luks
 
+%preun
+sed -i "/^#EXTERNAL_DISK_BEGIN/,/^#EXTERNAL_DISK_END/d" /etc/fstab
+
+
+%pre
+cat >> /etc/fstab << EOF
+#EXTERNAL_DISK_BEGIN
+# caution: do not modify the lines between begin and end
+# these lines are managed by the "external-disk" rpm
+
+# unencrypted stuff
+/dev/portable /media/portable vfat defaults 0 0
+/dev/insecure /media/insecure ext3 defaults 0 0
+# encrypted stuff
+/dev/mapper/secure  /media/secure  ext3 noauto 0 0
+/dev/mapper/voyager /media/voyager ext3 noauto 0 0
+
+#EXTERNAL_DISK_END
+EOF
+
+
+%post
+
+
+%postun
+
+
+%verifyscript
+# need to make this more robust
+grep -q EXTERNAL_DISK /etc/fstab || {
+  echo "Error: missing entries in /etc/fstab"
+  exit 1
+} >&2
+
 
 %changelog
-
+* Fri Jul 23 2010 Paul Morgan <jumanjiman@gmail.com> 0.1-0
+- initial packaging
