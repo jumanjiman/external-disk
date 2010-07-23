@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# unmounts a filesystem from an encrypted partition
+
+name=$1
+
+usage() {
+	cat <<- EOF
+	usage:   $0 device-name
+	example: $0 voyager
+	EOF
+}
+
+if [[ -z $name ]]; then
+  echo "Error: missing device-name" >&2
+  usage >&2
+  exit 1
+fi
+
+grep $name /etc/mtab || {
+  echo "Error: is $name mounted?"
+  exit 1
+} >&2
+
+if umount /media/$name; then
+  cryptsetup remove $name
+fi
