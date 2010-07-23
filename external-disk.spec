@@ -36,6 +36,7 @@ mkdir -p %{buildroot}/etc/udev/rules.d/
 mkdir -p %{buildroot}/usr/local/sbin/
 install -m 644 src/75-external-disk.rules %{buildroot}/etc/udev/rules.d/
 install -m 755 src/mount-luks %{buildroot}/usr/local/sbin/
+install -m 755 src/umount-luks %{buildroot}/usr/local/sbin/
 
 %clean
 rm -rf %{buildroot}
@@ -46,6 +47,7 @@ rm -rf %{buildroot}
 %doc src/COPYING
 %config /etc/udev/rules.d/75-external-disk.rules
 /usr/local/sbin/mount-luks
+/usr/local/sbin/umount-luks
 
 %preun
 sed -i "/^#EXTERNAL_DISK_BEGIN/,/^#EXTERNAL_DISK_END/d" /etc/fstab
